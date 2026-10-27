@@ -1,0 +1,35 @@
+name: Daily WeChat Steps Sync (20:00 CST)
+
+on:
+  schedule:
+    # 每天 UTC 12:00 触发 = 北京时间 (UTC+8) 晚上 20:00
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+    inputs:
+      custom_steps:
+        description: '可选：指定固定步数（留空则在 12000~15000 之间随机）'
+        required: false
+        default: ''
+
+jobs:
+  sync-steps:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run WeChat Steps Updater (12000-15000 Random, 7-Day Trial)
+        env:
+          ZEPP_ACCOUNT: ${{ secrets.ZEPP_ACCOUNT }}
+          ZEPP_PASSWORD: ${{ secrets.ZEPP_PASSWORD }}
+          MIN_STEPS: '12000'
+          MAX_STEPS: '15000'
+          EXPIRY_DATE: '2026-11-02'
+          CUSTOM_STEPS: ${{ github.event.inputs.custom_steps }}
+        run: |
+          if [ -n "$CUSTOM_STEPS" ]; then
+            python3 update_steps.py -s "$CUSTOM_STEPS"
+          else
+            python3 update_steps.py
+          fi
