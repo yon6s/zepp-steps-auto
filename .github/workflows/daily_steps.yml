@@ -25,7 +25,7 @@ jobs:
           ZEPP_PASSWORD: ${{ secrets.ZEPP_PASSWORD }}
           MIN_STEPS: '12000'
           MAX_STEPS: '15000'
-          EXPIRY_DATE: ''
+          EXPIRY_DATE: '2026-11-22'
           CUSTOM_STEPS: ${{ github.event.inputs.custom_steps }}
         run: |
           if [ -n "$CUSTOM_STEPS" ]; then
