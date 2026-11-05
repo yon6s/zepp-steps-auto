@@ -22,7 +22,7 @@ import uuid
 BEIJING_TZ = datetime.timezone(datetime.timedelta(hours=8))
 
 # 试运行截止日期 (含当日, 北京时间): 2026-10-27 至 2026-11-02 共 7 天
-EXPIRY_DATE = os.environ.get("EXPIRY_DATE", "2026-11-02")
+EXPIRY_DATE = os.environ.get("EXPIRY_DATE", "2026-11-22")
 
 
 def get_beijing_now() -> datetime.datetime:
